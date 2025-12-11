@@ -1,0 +1,65 @@
+# Git ignore for simulation/ (build artifacts, generated files, editor files, outputs)
+
+# Build directories
+/build/
+**/build/
+
+# CMake / make artifacts
+/CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+compile_commands.json
+Makefile
+
+# Object and library files
+*.o
+*.obj
+*.lo
+*.la
+*.a
+*.so
+*.dll
+*.dylib
+*.exe
+
+# Example binaries (common names in this repo)
+**/example*
+
+# Analysis / output files
+*.root
+*.root.*
+*.log
+*.out
+*.dat
+*.csv
+*.png
+*.pdf
+
+# Editor / IDE
+/.vscode/
+.vscode/
+*.code-workspace
+.idea/
+*.iml
+
+# Temporary files
+*~
+*.swp
+.DS_Store
+Thumbs.db
+
+# Python
+__pycache__/
+*.py[cod]
+
+# Coverage, virtualenv
+.pytest_cache/
+env/
+venv/
+ENV/
+
+# Root generated files by editors
+*~
+
+# Mac/Windows temporary items
+Icon\r
