@@ -22,9 +22,6 @@ Makefile
 *.dylib
 *.exe
 
-# Example binaries (common names in this repo)
-**/example*
-
 # Analysis / output files
 *.root
 *.root.*

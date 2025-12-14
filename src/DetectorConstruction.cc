@@ -105,7 +105,7 @@ G4VPhysicalVolume* DetectorConstruction::DefineVolumes()
   auto worldSizeZ = 250. * mm;
 
   G4double absoPosiZ = -40. * mm;
-  G4double targetPosiZ = 100. * mm;
+  G4double targetPosiZ = 50. * mm;
 
   // Get materials
   auto AirMaterial = G4Material::GetMaterial("G4_AIR");
@@ -147,7 +147,7 @@ G4VPhysicalVolume* DetectorConstruction::DefineVolumes()
   auto targetLV = new G4LogicalVolume(targetS, 
                                       PMMA, 
                                       "Target");
-                                      
+
   auto targetPV = new G4PVPlacement(nullptr, 
                                     G4ThreeVector(0., 0., targetPosiZ), 
                                     targetLV, 

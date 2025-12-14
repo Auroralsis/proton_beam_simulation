@@ -132,16 +132,16 @@ void EventAction::EndOfEventAction(const G4Event* event)
   scatPosi /= nScat;
 
   analysisManager->FillNtupleDColumn(0, eventID);
-  analysisManager->FillNtupleDColumn(1, nScat == 0 ? -1 : scatPosi[0]);
-  analysisManager->FillNtupleDColumn(2, nScat == 0 ? -1 : scatPosi[1]);
-  analysisManager->FillNtupleDColumn(3, nScat == 0 ? -1 : scatPosi[2]);
+  analysisManager->FillNtupleDColumn(1, scatPosi[0]);
+  analysisManager->FillNtupleDColumn(2, scatPosi[1]);
+  analysisManager->FillNtupleDColumn(3, scatPosi[2]);
 
-  analysisManager->FillNtupleDColumn(4, nAbso == 0 ? -1 : absoPosi[0]);
-  analysisManager->FillNtupleDColumn(5, nAbso == 0 ? -1 : absoPosi[1]);
-  analysisManager->FillNtupleDColumn(6, nAbso == 0 ? -1 : absoPosi[2]);
+  analysisManager->FillNtupleDColumn(4, absoPosi[0]);
+  analysisManager->FillNtupleDColumn(5, absoPosi[1]);
+  analysisManager->FillNtupleDColumn(6, absoPosi[2]);
 
-  analysisManager->FillNtupleDColumn(7, nScat == 0 ? -1 : scatEdep);
-  analysisManager->FillNtupleDColumn(8, nAbso == 0 ? -1 : absoEdep);
+  analysisManager->FillNtupleDColumn(7, scatEdep);
+  analysisManager->FillNtupleDColumn(8, absoEdep);
 
   analysisManager->AddNtupleRow();
 
