@@ -1,32 +1,3 @@
-//
-// ********************************************************************
-// * License and Disclaimer                                           *
-// *                                                                  *
-// * The  Geant4 software  is  copyright of the Copyright Holders  of *
-// * the Geant4 Collaboration.  It is provided  under  the terms  and *
-// * conditions of the Geant4 Software License,  included in the file *
-// * LICENSE and available at  http://cern.ch/geant4/license .  These *
-// * include a list of copyright holders.                             *
-// *                                                                  *
-// * Neither the authors of this software system, nor their employing *
-// * institutes,nor the agencies providing financial support for this *
-// * work  make  any representation or  warranty, express or implied, *
-// * regarding  this  software system or assume any liability for its *
-// * use.  Please see the license in the file  LICENSE  and URL above *
-// * for the full disclaimer and the limitation of liability.         *
-// *                                                                  *
-// * This  code  implementation is the result of  the  scientific and *
-// * technical work of the GEANT4 collaboration.                      *
-// * By using,  copying,  modifying or  distributing the software (or *
-// * any work based  on the software)  you  agree  to acknowledge its *
-// * use  in  resulting  scientific  publications,  and indicate your *
-// * acceptance of all terms of the Geant4 Software license.          *
-// ********************************************************************
-//
-//
-/// \file B4/B4c/src/EventAction.cc
-/// \brief Implementation of the B4c::EventAction class
-
 #include "EventAction.hh"
 
 #include "TrackerHit.hh"
@@ -41,8 +12,7 @@
 #include <iomanip>
 #include <algorithm>
 
-namespace B4c
-{
+EventAction::EventAction(RunAction* runAction) : fRunAction(runAction) {}
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
@@ -86,17 +56,29 @@ void EventAction::EndOfEventAction(const G4Event* event)
     fAbsoHCID = G4SDManager::GetSDMpointer()->GetCollectionID("AbsorberHitsCollection");
   }
 
+  // get analysis manager
+  auto analysisManager = G4AnalysisManager::Instance();
+  auto NtupleID = fRunAction->GetPromptNtupleID();
+
+	// Write prompt gammas recorded in this event into PromptGamma ntuple
+	if (!fPromptGammas.empty()) {
+			for (const auto &g : fPromptGammas) {
+        analysisManager->FillH1(2, g.energy);
+				analysisManager->FillNtupleIColumn(NtupleID, 0, g.eventID);
+				analysisManager->FillNtupleDColumn(NtupleID, 1, g.energy);
+				analysisManager->FillNtupleDColumn(NtupleID, 2, g.position.x());
+				analysisManager->FillNtupleDColumn(NtupleID, 3, g.position.y());
+				analysisManager->FillNtupleDColumn(NtupleID, 4, g.position.z());
+				analysisManager->AddNtupleRow();
+			}
+	}
+	fPromptGammas.clear();
+
   // Get hits collections
   auto scatHC = GetHitsCollection(fScatHCID, event);
   auto absoHC = GetHitsCollection(fAbsoHCID, event);
 
   auto eventID = event->GetEventID();
-
-  // Fill histograms, ntuple
-  //
-
-  // get analysis manager
-  auto analysisManager = G4AnalysisManager::Instance();
 
   G4int nScat = static_cast<G4int>(scatHC->entries());
   G4int nAbso = static_cast<G4int>(absoHC->entries());
@@ -131,23 +113,20 @@ void EventAction::EndOfEventAction(const G4Event* event)
   absoPosi /= nAbso;
   scatPosi /= nScat;
 
-  analysisManager->FillNtupleDColumn(0, eventID);
-  analysisManager->FillNtupleDColumn(1, scatPosi[0]);
-  analysisManager->FillNtupleDColumn(2, scatPosi[1]);
-  analysisManager->FillNtupleDColumn(3, scatPosi[2]);
+  NtupleID = fRunAction->GetDetectionNtupleID();
 
-  analysisManager->FillNtupleDColumn(4, absoPosi[0]);
-  analysisManager->FillNtupleDColumn(5, absoPosi[1]);
-  analysisManager->FillNtupleDColumn(6, absoPosi[2]);
+  analysisManager->FillNtupleIColumn(NtupleID, 0, eventID);
+  analysisManager->FillNtupleDColumn(NtupleID, 1, scatPosi[0]);
+  analysisManager->FillNtupleDColumn(NtupleID, 2, scatPosi[1]);
+  analysisManager->FillNtupleDColumn(NtupleID, 3, scatPosi[2]);
 
-  analysisManager->FillNtupleDColumn(7, scatEdep);
-  analysisManager->FillNtupleDColumn(8, absoEdep);
+  analysisManager->FillNtupleDColumn(NtupleID, 4, absoPosi[0]);
+  analysisManager->FillNtupleDColumn(NtupleID, 5, absoPosi[1]);
+  analysisManager->FillNtupleDColumn(NtupleID, 6, absoPosi[2]);
+
+  analysisManager->FillNtupleDColumn(NtupleID, 7, scatEdep);
+  analysisManager->FillNtupleDColumn(NtupleID, 8, absoEdep);
 
   analysisManager->AddNtupleRow();
 
-
 }
-
-//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
-
-}  // namespace B4c

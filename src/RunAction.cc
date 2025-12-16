@@ -1,32 +1,3 @@
-//
-// ********************************************************************
-// * License and Disclaimer                                           *
-// *                                                                  *
-// * The  Geant4 software  is  copyright of the Copyright Holders  of *
-// * the Geant4 Collaboration.  It is provided  under  the terms  and *
-// * conditions of the Geant4 Software License,  included in the file *
-// * LICENSE and available at  http://cern.ch/geant4/license .  These *
-// * include a list of copyright holders.                             *
-// *                                                                  *
-// * Neither the authors of this software system, nor their employing *
-// * institutes,nor the agencies providing financial support for this *
-// * work  make  any representation or  warranty, express or implied, *
-// * regarding  this  software system or assume any liability for its *
-// * use.  Please see the license in the file  LICENSE  and URL above *
-// * for the full disclaimer and the limitation of liability.         *
-// *                                                                  *
-// * This  code  implementation is the result of  the  scientific and *
-// * technical work of the GEANT4 collaboration.                      *
-// * By using,  copying,  modifying or  distributing the software (or *
-// * any work based  on the software)  you  agree  to acknowledge its *
-// * use  in  resulting  scientific  publications,  and indicate your *
-// * acceptance of all terms of the Geant4 Software license.          *
-// ********************************************************************
-//
-//
-/// \file B4/B4c/src/RunAction.cc
-/// \brief Implementation of the B4::RunAction class
-
 #include "RunAction.hh"
 
 #include "G4AnalysisManager.hh"
@@ -34,11 +5,6 @@
 #include "G4SystemOfUnits.hh"
 #include "G4UnitsTable.hh"
 #include "globals.hh"
-
-namespace B4
-{
-
-//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 RunAction::RunAction()
 {
@@ -63,11 +29,12 @@ RunAction::RunAction()
   // Creating histograms
   analysisManager->CreateH1("Escat", "Edep in scatter", 10000, 0., 2 * MeV);
   analysisManager->CreateH1("Eabso", "Edep in absorber", 10000, 0., 2 * MeV);
+  analysisManager->CreateH1("Energy", "Energy of prompt gamma", 10000, 0., 10. * MeV);
 
-  // Creating ntuple
+  // Creating ntuple for detector record
   //
-  analysisManager->CreateNtuple("Simulation", "Edep and position for scatter and absorber");
-  analysisManager->CreateNtupleDColumn("eventID");
+  fDetectionNtupleID = analysisManager->CreateNtuple("Detection", "Edep and position in scatter and absorber");
+  analysisManager->CreateNtupleIColumn("eventID");
   analysisManager->CreateNtupleDColumn("scatPosiX");
   analysisManager->CreateNtupleDColumn("scatPosiY");
   analysisManager->CreateNtupleDColumn("scatPosiZ");
@@ -76,6 +43,19 @@ RunAction::RunAction()
   analysisManager->CreateNtupleDColumn("absoPosiZ");
   analysisManager->CreateNtupleDColumn("scatEdep");
   analysisManager->CreateNtupleDColumn("absoEdep");
+  analysisManager->FinishNtuple();
+
+  // Creating ntuple for prompt gamma record
+  //
+
+  fPromptNtupleID = analysisManager->CreateNtuple("Prompt gamma", "Energy and position of prompt gamma");
+  analysisManager->CreateNtuple("Prompt gamma", "Energy and position of prompt gamma appearing");
+  analysisManager->CreateNtupleIColumn("eventID");
+  analysisManager->CreateNtupleDColumn("Energy");
+  analysisManager->CreateNtupleDColumn("PosiX");
+  analysisManager->CreateNtupleDColumn("PosiY");
+  analysisManager->CreateNtupleDColumn("PosiZ");
+  analysisManager->FinishNtuple();
   
   analysisManager->FinishNtuple();
 }
@@ -135,7 +115,3 @@ void RunAction::EndOfRunAction(const G4Run* /*run*/)
   analysisManager->Write();
   analysisManager->CloseFile();
 }
-
-//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
-
-}  // namespace B4
