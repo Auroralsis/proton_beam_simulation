@@ -61,13 +61,19 @@ void PrimaryGeneratorAction::GeneratePrimaries(G4Event* event)
     G4Exception("PrimaryGeneratorAction::GeneratePrimaries()", "MyCode0002", JustWarning, msg);
   }
 
-  // point source at world center (can be extended to sample a volume)
-  G4ThreeVector srcPos(-80. * mm, 0., 50. * mm);
+  // Pencil beam with Gaussian transverse profile
+  // Beam axis along +X, sample transverse (Y,Z) from Gaussian with sigma = 1 mm
+  const G4ThreeVector beamCenter(-140. * mm, 0. * mm, 50. * mm);
+  const G4double sigma = 1.0 * mm; // requested beam width (rms)
 
-  // Generate a single proton at 150 MeV from srcPos along +z
+  // sample Y and Z from Gaussian around the beam center
+  G4double sampY = G4RandGauss::shoot(beamCenter.y(), sigma);
+  G4double sampZ = G4RandGauss::shoot(beamCenter.z(), sigma);
+  G4ThreeVector srcPos(beamCenter.x(), sampY, sampZ);
+
+  // Set up particle and generate
   fParticleGun->SetParticlePosition(srcPos);
-  // ensure particle definition and energy already set in constructor; override energy just in case
   fParticleGun->SetParticleEnergy(150. * MeV);
-  fParticleGun->SetParticleMomentumDirection(G4ThreeVector(1.,0.,0.));
+  fParticleGun->SetParticleMomentumDirection(G4ThreeVector(1., 0., 0.));
   fParticleGun->GeneratePrimaryVertex(event);
 }

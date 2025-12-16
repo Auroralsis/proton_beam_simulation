@@ -64,8 +64,8 @@ G4VPhysicalVolume* DetectorConstruction::DefineVolumes()
   G4double scatSizeXY = 100. * mm;
   G4double absoSizeXY = 100. * mm;
 
-  G4double targetSizeX = 140. * mm;
-  G4double targetSizeY = 140. * mm;
+  G4double targetSizeX = 240. * mm;
+  G4double targetSizeY = 240. * mm;
   G4double targetSizeZ = 40. * mm;
 
   auto worldSizeX = 2 * targetSizeX;
