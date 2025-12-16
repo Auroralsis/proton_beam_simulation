@@ -8,7 +8,10 @@
 #include "G4UIcommand.hh"
 #include "G4UImanager.hh"
 #include "G4VisExecutive.hh"
-// #include "Randomize.hh"
+#include "Randomize.hh"
+
+#include <ctime>
+#include <unistd.h>
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
@@ -74,6 +77,11 @@ int main(int argc, char** argv)
     G4int precision = 4;
     G4SteppingVerbose::UseBestUnit(precision);
   }
+
+  // Set random seed
+  //
+  long seed = static_cast<long>(std::time(nullptr));
+  CLHEP::HepRandom::setTheSeed(seed);
 
   // Construct the default run manager
   //

@@ -62,7 +62,7 @@ void PrimaryGeneratorAction::GeneratePrimaries(G4Event* event)
   }
 
   // point source at world center (can be extended to sample a volume)
-  G4ThreeVector srcPos(-40. * mm, 0., 50. * mm);
+  G4ThreeVector srcPos(-80. * mm, 0., 50. * mm);
 
   // Generate a single proton at 150 MeV from srcPos along +z
   fParticleGun->SetParticlePosition(srcPos);

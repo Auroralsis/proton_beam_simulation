@@ -69,7 +69,7 @@ void EventAction::EndOfEventAction(const G4Event* event)
 				analysisManager->FillNtupleDColumn(NtupleID, 2, g.position.x());
 				analysisManager->FillNtupleDColumn(NtupleID, 3, g.position.y());
 				analysisManager->FillNtupleDColumn(NtupleID, 4, g.position.z());
-				analysisManager->AddNtupleRow();
+        analysisManager->AddNtupleRow(NtupleID);
 			}
 	}
 	fPromptGammas.clear();
@@ -127,6 +127,6 @@ void EventAction::EndOfEventAction(const G4Event* event)
   analysisManager->FillNtupleDColumn(NtupleID, 7, scatEdep);
   analysisManager->FillNtupleDColumn(NtupleID, 8, absoEdep);
 
-  analysisManager->AddNtupleRow();
+  analysisManager->AddNtupleRow(NtupleID);
 
 }

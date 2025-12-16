@@ -27,37 +27,34 @@ RunAction::RunAction()
   //
 
   // Creating histograms
-  analysisManager->CreateH1("Escat", "Edep in scatter", 10000, 0., 2 * MeV);
-  analysisManager->CreateH1("Eabso", "Edep in absorber", 10000, 0., 2 * MeV);
-  analysisManager->CreateH1("Energy", "Energy of prompt gamma", 10000, 0., 10. * MeV);
+  analysisManager->CreateH1("Escat", "Edep in scatter", 2000, 0., 8 * MeV);
+  analysisManager->CreateH1("Eabso", "Edep in absorber", 2000, 0., 8 * MeV);
+  analysisManager->CreateH1("Energy", "Energy of prompt gamma", 2000, 1. * MeV, 8. * MeV);
 
   // Creating ntuple for detector record
   //
   fDetectionNtupleID = analysisManager->CreateNtuple("Detection", "Edep and position in scatter and absorber");
-  analysisManager->CreateNtupleIColumn("eventID");
-  analysisManager->CreateNtupleDColumn("scatPosiX");
-  analysisManager->CreateNtupleDColumn("scatPosiY");
-  analysisManager->CreateNtupleDColumn("scatPosiZ");
-  analysisManager->CreateNtupleDColumn("absoPosiX");
-  analysisManager->CreateNtupleDColumn("absoPosiY");
-  analysisManager->CreateNtupleDColumn("absoPosiZ");
-  analysisManager->CreateNtupleDColumn("scatEdep");
-  analysisManager->CreateNtupleDColumn("absoEdep");
+  analysisManager->CreateNtupleIColumn(fDetectionNtupleID, "eventID");
+  analysisManager->CreateNtupleDColumn(fDetectionNtupleID, "scatPosiX");
+  analysisManager->CreateNtupleDColumn(fDetectionNtupleID, "scatPosiY");
+  analysisManager->CreateNtupleDColumn(fDetectionNtupleID, "scatPosiZ");
+  analysisManager->CreateNtupleDColumn(fDetectionNtupleID, "absoPosiX");
+  analysisManager->CreateNtupleDColumn(fDetectionNtupleID, "absoPosiY");
+  analysisManager->CreateNtupleDColumn(fDetectionNtupleID, "absoPosiZ");
+  analysisManager->CreateNtupleDColumn(fDetectionNtupleID, "scatEdep");
+  analysisManager->CreateNtupleDColumn(fDetectionNtupleID, "absoEdep");
   analysisManager->FinishNtuple();
 
   // Creating ntuple for prompt gamma record
   //
-
   fPromptNtupleID = analysisManager->CreateNtuple("Prompt gamma", "Energy and position of prompt gamma");
-  analysisManager->CreateNtuple("Prompt gamma", "Energy and position of prompt gamma appearing");
-  analysisManager->CreateNtupleIColumn("eventID");
-  analysisManager->CreateNtupleDColumn("Energy");
-  analysisManager->CreateNtupleDColumn("PosiX");
-  analysisManager->CreateNtupleDColumn("PosiY");
-  analysisManager->CreateNtupleDColumn("PosiZ");
+  analysisManager->CreateNtupleIColumn(fPromptNtupleID, "eventID");
+  analysisManager->CreateNtupleDColumn(fPromptNtupleID, "Energy");
+  analysisManager->CreateNtupleDColumn(fPromptNtupleID, "PosiX");
+  analysisManager->CreateNtupleDColumn(fPromptNtupleID, "PosiY");
+  analysisManager->CreateNtupleDColumn(fPromptNtupleID, "PosiZ");
   analysisManager->FinishNtuple();
   
-  analysisManager->FinishNtuple();
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
@@ -72,7 +69,7 @@ void RunAction::BeginOfRunAction(const G4Run* /*run*/)
 
   // Open an output file
   //
-  G4String fileName = "simulation.root";
+  G4String fileName = "../output/simulation.root";
   // Other supported output types:
   // G4String fileName = "B4.csv";
   // G4String fileName = "B4.hdf5";

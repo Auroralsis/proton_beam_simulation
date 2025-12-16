@@ -11,7 +11,7 @@
   //
 
   // Open file filled by Geant4 simulation
-  TFile f("B4.root");
+  TFile f("simulation.root");
 
   // Create a canvas and divide it into 2x2 pads
   TCanvas* c1 = new TCanvas("c1", "", 20, 20, 1000, 1000);
@@ -19,26 +19,22 @@
 
   // Draw Eabs histogram in the pad 1
   c1->cd(1);
-  TH1D* hist1 = (TH1D*)f.Get("Eabs");
+  TH1D* hist1 = (TH1D*)f.Get("Escat");
   hist1->Draw("HIST");
 
   // Draw Labs histogram in the pad 2
   c1->cd(2);
-  TH1D* hist2 = (TH1D*)f.Get("Labs");
+  TH1D* hist2 = (TH1D*)f.Get("Eabso");
   hist2->Draw("HIST");
 
   // Draw Egap histogram in the pad 3
 
-  TH1D* hist3 = (TH1D*)f.Get("Egap");
+  TH1D* hist3 = (TH1D*)f.Get("Energy");
   c1->cd(3);
   // set logarithmic scale for y  
   //gPad->SetLogy(1);
   hist3->Draw("HIST");
 
-  // Draw Lgap histogram in the pad 4
-  c1->cd(4);
   // set logarithmic scale for y  
   //gPad->SetLogy(1);  
-  TH1D* hist4 = (TH1D*)f.Get("Lgap");
-  hist4->Draw("HIST");
 }
