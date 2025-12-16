@@ -4,6 +4,10 @@
 /build/
 **/build/
 
+# Output directories
+/output/
+**/output/
+
 # CMake / make artifacts
 /CMakeFiles/
 CMakeCache.txt
