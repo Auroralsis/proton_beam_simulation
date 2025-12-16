@@ -61,8 +61,8 @@ G4VPhysicalVolume* DetectorConstruction::DefineVolumes()
   // Geometry parameters, here is the actual size of them without dividing 2
   G4double scatThickness = 5. * mm;
   G4double absoThickness = 5. * mm;
-  G4double scatSizeXY = 50. * mm;
-  G4double absoSizeXY = 50. * mm;
+  G4double scatSizeXY = 100. * mm;
+  G4double absoSizeXY = 100. * mm;
 
   G4double targetSizeX = 140. * mm;
   G4double targetSizeY = 140. * mm;
