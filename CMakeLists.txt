@@ -39,6 +39,8 @@ set(EXAMPLEB4C_SCRIPTS
   run1.mac
   run2.mac
   vis.mac
+  paint_distribution.py
+  save_ntuple_pyroot.py
   )
 
 foreach(_script ${EXAMPLEB4C_SCRIPTS})

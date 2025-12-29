@@ -30,6 +30,7 @@ void TrackerSD::Initialize(G4HCofThisEvent* hce)
 G4bool TrackerSD::ProcessHits(G4Step* step, G4TouchableHistory*)
 {
   // energy deposit
+  auto track = step->GetTrack();
   G4double edep = step->GetTotalEnergyDeposit();
 
   if (edep == 0.) return false;
