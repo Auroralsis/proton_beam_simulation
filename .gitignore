@@ -30,7 +30,6 @@ Makefile
 *.root
 *.root.*
 *.log
-*.out
 *.dat
 *.csv
 *.png
