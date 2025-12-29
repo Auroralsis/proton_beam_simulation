@@ -32,7 +32,7 @@ def find_tree(rootfile, name=None):
     return None
 
 tree1 = find_tree(f, treename1)
-# tree2 = find_tree(f, treename2)
+tree2 = find_tree(f, treename2)
 
 if tree1 is None and tree2 is None:
     print("No TTrees found in", fname)
