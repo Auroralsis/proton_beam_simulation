@@ -19,7 +19,7 @@ PrimaryGeneratorAction::PrimaryGeneratorAction()
   auto proton = G4ParticleTable::GetParticleTable()->FindParticle("proton");
   if (proton) {
     fParticleGun->SetParticleDefinition(proton);
-    fParticleGun->SetParticleMomentumDirection(G4ThreeVector(0.,0.,1.));
+    fParticleGun->SetParticleMomentumDirection(G4ThreeVector(1.,0.,0.));
     fParticleGun->SetParticleEnergy(150. * MeV);
   }
 }
@@ -63,7 +63,7 @@ void PrimaryGeneratorAction::GeneratePrimaries(G4Event* event)
 
   // Pencil beam with Gaussian transverse profile
   // Beam axis along +X, sample transverse (Y,Z) from Gaussian with sigma = 1 mm
-  const G4ThreeVector beamCenter(-140. * mm, 0. * mm, 50. * mm);
+  const G4ThreeVector beamCenter(-140. * mm, 0. * mm, 100. * mm);
   const G4double sigma = 1.0 * mm; // requested beam width (rms)
 
   // sample Y and Z from Gaussian around the beam center

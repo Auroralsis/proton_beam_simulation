@@ -27,9 +27,9 @@ RunAction::RunAction()
   //
 
   // Creating histograms
-  analysisManager->CreateH1("Escat", "Edep in scatter", 2000, 0., 8 * MeV);
-  analysisManager->CreateH1("Eabso", "Edep in absorber", 2000, 0., 8 * MeV);
-  analysisManager->CreateH1("Energy", "Energy of prompt gamma", 2000, 1. * MeV, 8. * MeV);
+  analysisManager->CreateH1("Escat", "Edep in scatter", 2000, 0., 10 * MeV);
+  analysisManager->CreateH1("Eabso", "Edep in absorber", 2000, 0., 10 * MeV);
+  analysisManager->CreateH1("Energy", "Energy of prompt gamma", 2000, 0. * MeV, 10. * MeV);
 
   // Creating ntuple for detector record
   //

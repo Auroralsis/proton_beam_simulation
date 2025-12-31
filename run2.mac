@@ -5,7 +5,7 @@
 #
 # Produce Histograms and Ntuples
 #
-/run/numberOfThreads 16
+#/run/numberOfThreads 16
 #/control/cout/ignoreThreadsExcept 0
 #
 # reduce the verbosity level for EM and hadronic physics

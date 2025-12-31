@@ -60,20 +60,20 @@ G4VPhysicalVolume* DetectorConstruction::DefineVolumes()
 {
   // Geometry parameters, here is the actual size of them without dividing 2
   G4double scatThickness = 5. * mm;
-  G4double absoThickness = 5. * mm;
-  G4double scatSizeXY = 100. * mm;
-  G4double absoSizeXY = 100. * mm;
+  G4double absoThickness = 10. * mm;
+  G4double scatSizeXY = 200. * mm;
+  G4double absoSizeXY = 400. * mm;
 
-  G4double targetSizeX = 240. * mm;
-  G4double targetSizeY = 240. * mm;
+  G4double targetSizeX = 180. * mm;
+  G4double targetSizeY = 40. * mm;
   G4double targetSizeZ = 40. * mm;
 
-  auto worldSizeX = 2 * targetSizeX;
-  auto worldSizeY = 2 * targetSizeY;
-  auto worldSizeZ = 250. * mm;
+  auto worldSizeX = 2 * absoSizeXY;
+  auto worldSizeY = 2 * absoSizeXY;
+  auto worldSizeZ = 300. * mm;
 
   G4double absoPosiZ = -40. * mm;
-  G4double targetPosiZ = 50. * mm;
+  G4double targetPosiZ = 100. * mm;
 
   // Get materials
   auto AirMaterial = G4Material::GetMaterial("G4_AIR");

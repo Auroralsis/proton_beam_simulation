@@ -92,12 +92,12 @@ void EventAction::EndOfEventAction(const G4Event* event)
 
   for (int i = 0; i < nScat; i++) {
     scatEdep += (*scatHC)[i]->GetEdep();
-    scatPosi += (*scatHC)[i]->GetPos();
+    scatPosi += (*scatHC)[i]->GetPos() * scatEdep;
   }
 
   for (int i = 0; i < nAbso; i++) {
     absoEdep += (*absoHC)[i]->GetEdep();
-    absoPosi += (*absoHC)[i]->GetPos();
+    absoPosi += (*absoHC)[i]->GetPos() * absoEdep;
   }
 
   if (nScat != 0) {
@@ -110,8 +110,8 @@ void EventAction::EndOfEventAction(const G4Event* event)
   // record data only when both scatter and absorber detect event simultaneously
   if (nScat == 0 || nAbso == 0) return;
   
-  absoPosi /= nAbso;
-  scatPosi /= nScat;
+  absoPosi /= scatEdep;
+  scatPosi /= absoEdep;
 
   NtupleID = fRunAction->GetDetectionNtupleID();
 
